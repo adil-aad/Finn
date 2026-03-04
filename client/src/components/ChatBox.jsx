@@ -21,7 +21,7 @@ const ChatBox = () => {
 
         <div className='flex-1 mb-5 overflow-y-scroll'>
             {messages.length === 0 && (
-                <div>
+                <div className='h-full flex flex-col items-center justify-center gap-2 text-primary'>
                     <img src={theme === 'dark' ? assets.logo_full: assets.logo_full_dark} alt="" 
                     className='w-full max-w-56 sm:max-w-68'/>
                     <p className='mt-5 text-4xl sm:text-6xl text-center text-gray-400
