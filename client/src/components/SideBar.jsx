@@ -34,7 +34,7 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
             {
                 chats.filter((chat)=>chat.messages[0] ? chat.messages[0]?.content.toLowerCase().includes(search.toLowerCase()):
                 chat.name.toLowerCase().includes(search.toLowerCase())).map((chat)=>(
-                    <div key={chat._id} className='p-2 px-4 dark:bg-[#57317C]/10 border border-gray-300
+                    <div onClick={()=>{navigate('/'); setSelectedChat(chat); setIsMenuOpen(false)}} key={chat._id} className='p-2 px-4 dark:bg-[#57317C]/10 border border-gray-300
                     dark:border-[#80609F]/15 rounded-md cursor-pointer flex justify-between group'>
                         <div>
                             <p className='turncate w-full'>{chat.messages.length > 0 ? chat.messages[0].content.slice(0,32): chat.name}</p>
@@ -47,7 +47,7 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
             }
         </div>
         {/* Community images*/}
-        <div onClick={()=>{navigate('/community')}} className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 
+        <div onClick={()=>{navigate('/community'); setIsMenuOpen(false)}} className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 
         rounded-md cursor-pointer hover:scale-103 transition-all'>
             <img src={assets.gallery_icon} alt="" className='w-4.5 not-dark:invert'/>
             <div className='flex flex-col text-sm'>
@@ -56,7 +56,7 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
         </div>
 
          {/* Credit Purchase*/}
-        <div onClick={()=>{navigate('/credits')}} className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 
+        <div onClick={()=>{navigate('/credits'); setIsMenuOpen(false)}} className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 
         rounded-md cursor-pointer hover:scale-103 transition-all'>
             <img src={assets.diamond_icon} alt="" className='w-4.5 dark:invert'/>
             <div className='flex flex-col text-sm'>
