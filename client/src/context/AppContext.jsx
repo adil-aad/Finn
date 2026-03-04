@@ -18,7 +18,7 @@ export const AppContextProvider = ({ children }) => {
 
     const fetchUsersChats = async () => {
         setChats(dummyChats)
-        setSelectedChat()
+        setSelectedChat(dummyChats[0])
     }
 
     useEffect(()=>{
