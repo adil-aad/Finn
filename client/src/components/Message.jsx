@@ -24,7 +24,8 @@ const Message = ({message}) => {
                 ) : 
                 (
                     <div className='text-sm dark:text-primary reset-tw'>{message.content}</div>
-                )} 
+                )}
+                <span>{message.timestamp}</span> 
            </div> 
         )
         }
