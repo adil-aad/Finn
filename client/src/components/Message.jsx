@@ -1,4 +1,5 @@
 import React from 'react'
+import { assets } from '../assets/assets'
 
 const Message = ({message}) => {
   return (
@@ -11,12 +12,19 @@ const Message = ({message}) => {
                     <span className='text-xs text-gray-400 dark:text-[#B1A6C0]'>{message.timestamp}</span>
 
                 </div>
+                <img src={assets.user_icon} alt="" className='w-8 rounded-full'/>
 
             </div>
         ): 
         (
-           <div>
-
+           <div className='inline-flex flex-col gap-2 p-2 px-4 max-w-2xl bg-primary/20 
+           dark:bg-#[57317C]/30 border border-[#806090F]/30 rounded-md my-4'>
+                {message.isImage ? (
+                    <img src={message.content} className='w-full max-w-md mt-2 rounded-md'/>
+                ) : 
+                (
+                    <div className='text-sm dark:text-primary reset-tw'>{message.content}</div>
+                )} 
            </div> 
         )
         }
