@@ -47,7 +47,10 @@ const ChatBox = () => {
 
         {/* prompt box*/}
         <form action="">
-
+            <select className='text-sm pl-3 pr-2 outline-none'>
+                <option className='dark:bg-purple-900' value="text">Text</option>
+                <option className='dark:bg-purple-900' value="image">Image</option>
+            </select>
         </form>
     </div>
   )
