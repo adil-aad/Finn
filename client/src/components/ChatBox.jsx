@@ -59,6 +59,8 @@ const ChatBox = () => {
                 <option className='dark:bg-purple-900' value="text">Text</option>
                 <option className='dark:bg-purple-900' value="image">Image</option>
             </select>
+            <input onChange={(e)=>setPrompt(e.target.value)} value={prompt} type="text" placeholder='Enter Your Prompt...'
+            className='flex-1 w-full text-sm outline-none' required/>
         </form>
     </div>
   )
