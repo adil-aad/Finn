@@ -57,7 +57,7 @@ const ChatBox = () => {
             <label className='inline-flex items-center gap-2 mb-3 text-sm mx-auto'>
                 <p className='text-xs'>Publish Image Into Community</p>
                 <input type="checkbox" className='cursor-pointer' checked={isPublished}
-                onChange={(e)=>setisPublished(e.target.value)}/>
+                onChange={(e)=>setisPublished(e.target.checked)}/>
             </label>
         )}
 
