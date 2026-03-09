@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { dummyPublishedImages } from '../assets/assets'
+import Loading from './Loading'
 
 const Community = () => {
 
@@ -10,6 +11,12 @@ const Community = () => {
     setImages(dummyPublishedImages)
     setLoading(false)
   }
+
+  useEffect(()=>{
+    fetchImages()
+  },[])
+
+  if(loading) return <Loading />
   
   return (
     <div>
