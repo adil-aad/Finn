@@ -2,6 +2,7 @@
 
 import User from "../models/User.js"
 import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
 
 //generate JWT
 
@@ -22,7 +23,32 @@ export const registerUser = async (req,res) => {
         return res.json({success:true, message: "User already exists"})
        }
        const user = await User.create({name, email, password})
+
+       const token = generateToken(user._id)
+       res.json({success:true, token})
     } catch (error) {
-        
+        return res.json({success:false, message: error.message})
+    }
+}
+
+
+// api to Login user
+
+export const loginUser = async (req,res) => {
+    const {email, password} = req.body
+
+    try {
+       const user = await User.findOne({email})
+       if(user){
+        const isMatch = await bcrypt.compare(password, user.password)
+       }
+
+       if(isMatch){
+        const token = generateToken(user._id)
+        return res.json({success:true, token})
+       }
+       return res.json({success:false, message:"Invalid Email or Password"})
+    } catch (error) {
+        return res.json({success:false, message: error.message})
     }
 }
