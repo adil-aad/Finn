@@ -1,12 +1,17 @@
-import jwt, { decode } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
 
 export const protect = async (req, res, next) => {
-    let token = req.headers.authorization
+    const authHeader = req.headers.authorization
+    const token = authHeader?.startsWith('Bearer ') ? authHeader.split(' ')[1] : authHeader
 
     try {
+        if(!token){
+            return res.status(401).json({success:false, message: "Not authorized, no token"})
+        }
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const userId = decoded.userId
+        const userId = decoded.id
 
         const user = await User.findById(userId)
 
