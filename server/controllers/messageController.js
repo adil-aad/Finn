@@ -22,9 +22,9 @@ export const textMessageController = async (req, res) => {
         res.json({success:true, reply})
 
         chat.messages.push(reply)
-        await Chat.save()
+        await chat.save()
 
-        await User.updateOne({_id: userId}, {$inc: {credites: -1}})
+        await User.updateOne({_id: userId}, {$inc: {credits: -1}})
         
     } catch (error) {
         res.json({success: false, message: error.message})
