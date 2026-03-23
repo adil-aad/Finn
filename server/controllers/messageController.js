@@ -30,3 +30,25 @@ export const textMessageController = async (req, res) => {
         res.json({success: false, message: error.message})
     }
 }
+
+// Image generation controller
+
+export const imageMessageController = async (req, res) => {
+    try {
+        const userId = req.user._id
+
+        if(req.user.credits < 2){
+            return res.json({success:false, message:"Not enough credits for image generation"})
+        }
+
+        const {prompt, chatId, isPublished} = req.body
+
+        const chat = await Chat.findOne({userId, _id:chatId})
+
+        chat.messages.push({
+            role: "User", content: prompt, timestamp: Date.now(), isImage: false
+        })
+    } catch (error) {
+        
+    }
+}
