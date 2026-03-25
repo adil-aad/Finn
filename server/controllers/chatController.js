@@ -36,6 +36,25 @@ export const getChats = async (req, res) => {
 }
 
 
+// Getting a single chat
+export const getChat = async (req, res) => {
+    try {
+        const userId = req.user._id
+        const { chatId } = req.params
+
+        const chat = await Chat.findOne({ _id: chatId, userId })
+
+        if(!chat){
+            return res.status(404).json({success:false, message: "Chat not found"})
+        }
+
+        res.json({success:true, chat})
+    } catch (error) {
+        res.status(500).json({success:false, message: error.message})
+    }
+}
+
+
 //delete chat
 export const deleteChat = async (req, res) => {
     try {
