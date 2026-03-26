@@ -3,6 +3,23 @@
 import Chat from "../models/Chat.js"
 import User from "../models/User.js"
 
+export const getMessages = async (req, res) => {
+    try {
+        const userId = req.user._id
+        const { chatId } = req.params
+
+        const chat = await Chat.findOne({ userId, _id: chatId })
+
+        if(!chat){
+            return res.status(404).json({success:false, message: "Chat not found"})
+        }
+
+        return res.json({success:true, messages: chat.messages})
+    } catch (error) {
+        return res.status(500).json({success:false, message: error.message})
+    }
+}
+
 
 export const textMessageController = async (req, res) => {
     try {
