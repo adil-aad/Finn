@@ -8,6 +8,14 @@ import imagekit from "../configs/imageKit.js"
 export const getMessages = async (req, res) => {
     try {
         const userId = req.user._id
+
+
+        //check credits
+
+        if(req.user.credits < 1){
+            return res.json({success:false, message:"Not enough credits for image generation"})
+        }
+
         const { chatId } = req.params
 
         const chat = await Chat.findOne({ userId, _id: chatId })
@@ -26,6 +34,12 @@ export const getMessages = async (req, res) => {
 export const textMessageController = async (req, res) => {
     try {
         const userId = req.user._id
+
+         //check credits
+
+        if(req.user.credits < 1){
+            return res.json({success:false, message:"Not enough credits for image generation"})
+        }
         const {chatId, prompt} = req.body
 
         const chat = await Chat.findOne({userId, _id: chatId})
@@ -55,6 +69,8 @@ export const textMessageController = async (req, res) => {
 export const imageMessageController = async (req, res) => {
     try {
         const userId = req.user._id
+
+        //check credits
 
         if(req.user.credits < 2){
             return res.json({success:false, message:"Not enough credits for image generation"})
