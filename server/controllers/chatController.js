@@ -1,6 +1,7 @@
 // Api controller for creating a new chat
 
 import Chat from "../models/Chat.js"
+import mongoose from "mongoose"
 
 export const createChat = async (req, res) => {
     try {
@@ -51,6 +52,38 @@ export const getChat = async (req, res) => {
         res.json({success:true, chat})
     } catch (error) {
         res.status(500).json({success:false, message: error.message})
+    }
+}
+
+
+// Rename chat
+export const renameChat = async (req, res) => {
+    try {
+        const userId = req.user._id
+        const { chatId } = req.params
+        const { name } = req.body
+
+        if(!mongoose.Types.ObjectId.isValid(chatId)){
+            return res.status(400).json({success:false, message: "Invalid chat id"})
+        }
+
+        if(!name || !name.trim()){
+            return res.status(400).json({success:false, message: "Chat name is required"})
+        }
+
+        const chat = await Chat.findOneAndUpdate(
+            { _id: chatId, userId },
+            { name: name.trim() },
+            { new: true }
+        )
+
+        if(!chat){
+            return res.status(404).json({success:false, message: "Chat not found"})
+        }
+
+        return res.json({success:true, message: "Chat renamed", chat})
+    } catch (error) {
+        return res.status(500).json({success:false, message: error.message})
     }
 }
 
