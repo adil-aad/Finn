@@ -21,7 +21,7 @@ app.use(express.json())
 app.get('/', (req, res)=> res.send('Server is Running'))
 app.use('/api/user', userRouter)
 app.use('/api/chat', chatRouter)
-app.use('api/message', messageRouter)
+app.use('/api/message', messageRouter)
 
 
 const PORT = process.env.PORT || 3000

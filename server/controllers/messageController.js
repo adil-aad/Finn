@@ -4,18 +4,11 @@ import axios from "axios"
 import Chat from "../models/Chat.js"
 import User from "../models/User.js"
 import imagekit from "../configs/imageKit.js"
+import openai from "../configs/openai.js"
 
 export const getMessages = async (req, res) => {
     try {
         const userId = req.user._id
-
-
-        //check credits
-
-        if(req.user.credits < 1){
-            return res.json({success:false, message:"Not enough credits for image generation"})
-        }
-
         const { chatId } = req.params
 
         const chat = await Chat.findOne({ userId, _id: chatId })
@@ -38,11 +31,16 @@ export const textMessageController = async (req, res) => {
          //check credits
 
         if(req.user.credits < 1){
-            return res.json({success:false, message:"Not enough credits for image generation"})
+            return res.status(400).json({success:false, message:"Not enough credits for text generation"})
         }
         const {chatId, prompt} = req.body
 
         const chat = await Chat.findOne({userId, _id: chatId})
+
+        if(!chat){
+            return res.status(404).json({success:false, message: "Chat not found"})
+        }
+
         chat.messages.push({role: "User", content: prompt, timestamp: Date.now(), isImage: false})
 
         const {choices} = await openai.chat.completions.create({
@@ -60,7 +58,7 @@ export const textMessageController = async (req, res) => {
         await User.updateOne({_id: userId}, {$inc: {credits: -1}})
         
     } catch (error) {
-        res.json({success: false, message: error.message})
+        res.status(500).json({success: false, message: error.message})
     }
 }
 
@@ -80,6 +78,10 @@ export const imageMessageController = async (req, res) => {
 
         const chat = await Chat.findOne({userId, _id:chatId})
 
+        if(!chat){
+            return res.status(404).json({success:false, message: "Chat not found"})
+        }
+
         chat.messages.push({
             role: "User",
             content: prompt,
@@ -93,8 +95,7 @@ export const imageMessageController = async (req, res) => {
 
         // construct ImageKit generation URL
 
-        const generatedImageUrl = `${process.env.IMAGEKIT_URL_ENDPOINT}/
-        ik-genimg-prompt-${encodedPrompt}/Finn/${Date.now()}.png?tr=w=800,h-800`
+        const generatedImageUrl = `${process.env.IMAGEKIT_URL_ENDPOINT}/ik-genimg-prompt-${encodedPrompt}/Finn/${Date.now()}.png?tr=w=800,h=800`
 
         // Generating and fetching from imagekit
 
@@ -102,8 +103,7 @@ export const imageMessageController = async (req, res) => {
 
         // conver to base_64
 
-        const base64Image = `data:image/png;base64,
-        ${Buffer.from(aiImageResponse.data, "binary").toString('base64')}`
+        const base64Image = `data:image/png;base64,${Buffer.from(aiImageResponse.data, "binary").toString('base64')}`
 
         //upload to imageKit media library 
 
@@ -129,6 +129,6 @@ export const imageMessageController = async (req, res) => {
 
 
     } catch (error) {
-        res.json({success:false, message: error.message})
+        res.status(500).json({success:false, message: error.message})
     }
 }
