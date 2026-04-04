@@ -1,3 +1,4 @@
+import Transaction from "../models/Transaction.js"
 
 
 
@@ -35,3 +36,31 @@ export const getPlans = async (req, res) => {
     }
 }
 
+// APi controller to purcahse a plan
+
+export const purchasePlan = async (req, res) => {
+    try {
+        const { planId } = req.body
+        const userId = req.user._id
+
+        const plan = plans.find((plan)=>plan._id == planId)
+
+        if(!plan) { 
+            return res.json({success: false, message: "Invalid plan"})
+        }
+
+        // create new transaction 
+
+        const transaction = Transaction.create({
+            userId: userId,
+            planId: plan._id,
+            amount: plan.price,
+            credits: plan.credits,
+            isPaid: false
+        })
+
+        
+    } catch (error) {
+        
+    }
+}
