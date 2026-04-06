@@ -26,20 +26,20 @@ export const registerUser = async (req,res) => {
 
     try {
        if(!name || !email || !password){
-        return res.status(400).json({success:false, message: "Name, email and password are required"})
+        return res.json({success:false, message: "Name, email and password are required"})
        }
 
        const userExists = await User.findOne({email})
 
        if(userExists){
-        return res.status(409).json({success:false, message: "User already exists"})
+        return res.json({success:false, message: "User already exists"})
        }
        const user = await User.create({name, email, password})
 
        const token = generateToken(user._id)
-       res.status(201).json({success:true, token, user: formatUser(user)})
+       res.json({success:true, token, user: formatUser(user)})
     } catch (error) {
-        return res.status(500).json({success:false, message: error.message})
+        return res.json({success:false, message: error.message})
     }
 }
 
@@ -51,12 +51,12 @@ export const loginUser = async (req,res) => {
 
     try {
        if(!email || !password){
-        return res.status(400).json({success:false, message:"Email and password are required"})
+        return res.json({success:false, message:"Email and password are required"})
        }
 
        const user = await User.findOne({email})
        if(!user){
-        return res.status(401).json({success:false, message:"Invalid Email or Password"})
+        return res.json({success:false, message:"Invalid Email or Password"})
        }
 
        const isMatch = await bcrypt.compare(password, user.password)
@@ -67,7 +67,7 @@ export const loginUser = async (req,res) => {
        }
        return res.status(401).json({success:false, message:"Invalid Email or Password"})
     } catch (error) {
-        return res.status(500).json({success:false, message: error.message})
+        return res.json({success:false, message: error.message})
     }
 }
 
@@ -76,7 +76,7 @@ export const getUser = async (req,res)=>{
         const user = req.user
         return res.json({success:true, user: formatUser(user)})
     } catch (error) {
-        return res.status(500).json({success:false, message: error.message})
+        return res.json({success:false, message: error.message})
     }
 }
 
@@ -122,7 +122,7 @@ export const updateUser = async (req, res) => {
             user: formatUser(user)
         })
     } catch (error) {
-        return res.status(500).json({success:false, message: error.message})
+        return res.json({success:false, message: error.message})
     }
 }
 
