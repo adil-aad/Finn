@@ -149,7 +149,7 @@ export const getPublishedImages = async (req, res) => {
             
         ])
 
-        res.json({success:true, images: publishedImageMessages.reverse})
+        res.json({success:true, images: publishedImageMessages.reverse()})
     } catch (error) {
         res.json({success: false, message: error.message})
     }
