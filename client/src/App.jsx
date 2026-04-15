@@ -9,7 +9,7 @@ import './assets/prism.css'
 import Loading from './pages/Loading'
 import { useAppContext } from './context/AppContext'
 import Login from './pages/Login'
-import { ToastBar, Toaster, toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
 

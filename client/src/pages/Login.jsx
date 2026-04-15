@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useAppContext } from '../context/AppContext'
+import toast from 'react-hot-toast'
 
 const Login = () => {
 
@@ -6,9 +8,24 @@ const Login = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const {axios, setToken} = useAppContext() 
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const url = state === "login" ? '/api/user/login' : '/api/user/registet'
+
+
+    try {
+      const {data} = await axios(url, {name, email, password})
+      if(data.success){
+        setToken(data.token)
+        localStorage.setItem('token', data.token)
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
   }
   return (
     <form onSubmit={handleSubmit} className='flex flex-col gap-4 m-auto items-start p-8
