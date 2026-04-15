@@ -2,11 +2,20 @@ import React, { useState } from 'react'
 import { useAppContext } from '../context/AppContext'
 import { assets } from '../assets/assets'
 import moment from 'moment'
+import toast from 'react-hot-toast'
 
 const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
 
-    const {chats, setSelectedChat, theme, setTheme, user, navigate} = useAppContext()
+    const {chats, setSelectedChat, theme, setTheme, user, navigate,
+        createNewChat, axios, setChats, fetchUsersChats, setToken } = useAppContext()
     const [search, setSearch] = useState('')
+
+    const logOut = () => {
+        localStorage.removeItem('token')
+        setToken(null)
+        toast.success('Logged Out successfully')
+    }
+
   return (
     <div className={`flex flex-col h-screen min-w-72 p-5 dark: bg-gradient-to-b from-
     [#242124]/30 to-[#000000]/30 border-r border-[#80609F]/30 backdrop-blur-3xl transition-all 
@@ -91,7 +100,7 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
         rounded-md cursor-pointer group'>
             <img src={assets.user_icon} alt="" className='w-7 rounded-full'/>
             <p className='flex-1 text-sm dark:text-primary truncate'>{user ? user.name : 'Login to your account'}</p>
-            {user && <img src={assets.logout_icon} className='h-5 cursor-pointer hidden not-dark:invert
+            {user && <img onClick={logOut} src={assets.logout_icon} className='h-5 cursor-pointer hidden not-dark:invert
             group-hover:block'/>}
             
         </div>
