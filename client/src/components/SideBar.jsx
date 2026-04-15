@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
 
     const {chats, setSelectedChat, theme, setTheme, user, navigate,
-        createNewChat, axios, setChats, fetchUsersChats, setToken } = useAppContext()
+        createNewChat, axios, setChats, fetchUsersChats, token,  setToken } = useAppContext()
     const [search, setSearch] = useState('')
 
     const logOut = () => {
@@ -29,7 +29,7 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
             if(data.success){
                 setChats(prev => prev.filter(chat => chat._id !== chatId))
                 await fetchUsersChats()
-                toast.success(data.messages)
+                toast.success(data.message)
             }
                 
         } catch (error) {
@@ -72,7 +72,7 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
                             <p className='text-xs text-gray-500 dark:text-[#B1A6C0]'>{moment(chat.updatedAt).fromNow()}</p>
                         </div>
                         <img src={assets.bin_icon} alt="" className='hidden group-hover:block w-4 cursor-pointer
-                        not-dark:invert' onClick={e=> toast.promise(deleteChat(e, chat._id), {loading: 'deleting...'})}/>
+                        not-dark:invert' onClick={e=> deleteChat(e, chat._id)}/>
                     </div>
                 ))
             }
