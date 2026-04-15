@@ -16,6 +16,28 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
         toast.success('Logged Out successfully')
     }
 
+    const deleteChat = async(e, chatId) => {
+
+        try {
+            e.stopPropagation()
+            const confirm = window.confirm('Are you sure you want to delete this chat?')
+
+            if(!confirm) return
+            const { data } = await axios.post ('/api/chat/delete', {chatId},
+            {headers: {Authorization: token}})
+
+            if(data.success){
+                setChats(prev => prev.filter(chat => chat._id !== chatId))
+                await fetchUsersChats()
+                toast.success(data.messages)
+            }
+                
+        } catch (error) {
+           toast.error(error.message)     
+        }
+        
+    }
+
   return (
     <div className={`flex flex-col h-screen min-w-72 p-5 dark: bg-gradient-to-b from-
     [#242124]/30 to-[#000000]/30 border-r border-[#80609F]/30 backdrop-blur-3xl transition-all 
@@ -50,7 +72,7 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
                             <p className='text-xs text-gray-500 dark:text-[#B1A6C0]'>{moment(chat.updatedAt).fromNow()}</p>
                         </div>
                         <img src={assets.bin_icon} alt="" className='hidden group-hover:block w-4 cursor-pointer
-                        not-dark:invert'/>
+                        not-dark:invert' onClick={e=> toast.promise(deleteChat(e, chat._id), {loading: 'deleting...'})}/>
                     </div>
                 ))
             }
