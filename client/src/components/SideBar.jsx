@@ -46,7 +46,7 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
         <img src={theme === 'dark' ? assets.logo_full: assets.logo_full_dark} alt=""
         className='w-full max-w-48'/>
         {/* New chat button*/}
-        <button className='flex justify-center items-center w-full py-2 mt-10 text-white 
+        <button onClick={createNewChat} className='flex justify-center items-center w-full py-2 mt-10 text-white 
         bg-gradient-to-r from-[#A456F7] to-[#3D81F6] text-sm rounded-md cursor-pointer '>
             <span className='mr-2 text-xl'>+</span>New Chat
         </button>
