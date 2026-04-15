@@ -8,9 +8,6 @@ const chatRouter = express.Router()
 
 chatRouter.get('/create',protect, createChat)
 chatRouter.get('/get',protect, getChats)
-chatRouter.get('/:chatId/messages',protect, getMessages)
-chatRouter.put('/:chatId',protect, renameChat)
-chatRouter.get('/:chatId',protect, getChat)
 chatRouter.post('/delete',protect, deleteChat)
 
 

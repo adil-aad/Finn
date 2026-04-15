@@ -31,20 +31,20 @@ export const textMessageController = async (req, res) => {
          //check credits
 
         if(req.user.credits < 1){
-            return res.status(400).json({success:false, message:"Not enough credits for text generation"})
+            return res.json({success:false, message:"Not enough credits for text generation"})
         }
         const {chatId, prompt} = req.body
 
         const chat = await Chat.findOne({userId, _id: chatId})
 
         if(!chat){
-            return res.status(404).json({success:false, message: "Chat not found"})
+            return res.json({success:false, message: "Chat not found"})
         }
 
         chat.messages.push({role: "User", content: prompt, timestamp: Date.now(), isImage: false})
 
         const {choices} = await openai.chat.completions.create({
-            model: "gemini-3.1-flash-lite-preview", // Use the Gemini model name here
+            model: "gemini-2.5-flash", 
             messages: [{ role: "user", content: prompt }],
         });
 
@@ -129,6 +129,6 @@ export const imageMessageController = async (req, res) => {
 
 
     } catch (error) {
-        res.status(500).json({success:false, message: error.message})
+        res.json({success:false, message: error.message})
     }
 }
