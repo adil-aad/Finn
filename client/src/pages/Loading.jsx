@@ -15,11 +15,10 @@ const Loading = () => {
     return ()=> clearTimeout(timeout)
   },[])
   return (
-    <div className='bg-gradient-to-b from-[#531B81] to-[#29184B] backdrop-opacity-60
-    flex items-center justify-center h-screen w-screen text-white text-2xl'>
-      <div className='w-10 h-10 rounded-full border-3 border-white border-t-transparent
-      animate-spin'>
-
+    <div className='flex h-screen w-screen items-center justify-center bg-[#f6f4ef] text-zinc-950 dark:bg-[#101113] dark:text-white'>
+      <div className='flex flex-col items-center gap-4'>
+        <div className='h-12 w-12 animate-spin rounded-full border-4 border-zinc-200 border-t-cyan-400 dark:border-white/10 dark:border-t-cyan-300'></div>
+        <p className='text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400'>Loading Finn</p>
       </div>
     </div>
   )

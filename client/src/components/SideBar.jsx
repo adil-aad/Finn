@@ -39,98 +39,97 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
     }
 
   return (
-    <div className={`flex flex-col h-screen min-w-72 p-5 dark: bg-gradient-to-b from-
-    [#242124]/30 to-[#000000]/30 border-r border-[#80609F]/30 backdrop-blur-3xl transition-all 
-    duration-500 max-md:absolute left-0 z-1 ${!isMenuOpen && 'max-md:-translate-x-full'}`}>
+    <aside className={`relative z-40 flex h-screen w-80 shrink-0 flex-col border-r border-zinc-200/80 bg-white/85 p-4 shadow-2xl shadow-zinc-200/70 backdrop-blur-2xl transition-transform duration-300 max-md:fixed max-md:left-0 max-md:top-0 dark:border-white/10 dark:bg-zinc-950/82 dark:shadow-black/40 ${!isMenuOpen && 'max-md:-translate-x-full'}`}>
         {/* logo */}
-        <img src={theme === 'dark' ? assets.logo_full: assets.logo_full_dark} alt=""
-        className='w-full max-w-48'/>
+        <div className='flex items-center justify-between gap-3 rounded-lg border border-zinc-200 bg-[#faf8f1] p-3 dark:border-white/10 dark:bg-white/[0.04]'>
+            <img src={theme === 'dark' ? assets.logo_full: assets.logo_full_dark} alt="Finn"
+            className='w-full max-w-36'/>
+            <span className='rounded-full bg-emerald-100 px-2 py-1 text-[11px] font-semibold text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300'>AI Studio</span>
+        </div>
         {/* New chat button*/}
-        <button onClick={createNewChat} className='flex justify-center items-center w-full py-2 mt-10 text-white 
-        bg-gradient-to-r from-[#A456F7] to-[#3D81F6] text-sm rounded-md cursor-pointer '>
-            <span className='mr-2 text-xl'>+</span>New Chat
+        <button onClick={createNewChat} className='mt-5 flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-zinc-950 text-sm font-semibold text-white shadow-lg shadow-zinc-300/70 transition hover:-translate-y-0.5 hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:shadow-black/30 dark:hover:bg-zinc-200'>
+            <span className='grid h-6 w-6 place-items-center rounded-full bg-cyan-400 text-lg leading-none text-zinc-950'>+</span>New Chat
         </button>
 
         {/* search conversations*/}
-        <div className='flex items-center gap-2 p-3 mt-4 border border-gray-400
-        dark:border-white/20 rounded-md'>
-            <img src={assets.search_icon} className='w-4 not-dark:invert' alt="" />
+        <div className='mt-4 flex h-11 items-center gap-3 rounded-lg border border-zinc-200 bg-white px-3 shadow-sm dark:border-white/10 dark:bg-white/[0.04]'>
+            <img src={assets.search_icon} className='w-4 opacity-60 dark:invert' alt="" />
             <input onChange={(e)=>setSearch(e.target.value)} value={search} type="text"
-            placeholder='Search Conversations' className='text-xs placeholder:text-gray-400 outline-none'/>
+            placeholder='Search conversations' className='min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-zinc-400'/>
         </div>
 
         { /* Recent Chats*/}
-        {chats.length > 0 && <p className='mt-4 text-sm'>Recent Chats</p>}
-        <div className='flex-1 overflow-y-scroll mt-3 text-sm space-y-3'>
+        {chats.length > 0 && <p className='mt-5 px-1 text-xs font-bold uppercase tracking-[0.18em] text-zinc-400'>Recent</p>}
+        <div className='mt-3 flex-1 space-y-2 overflow-y-auto pr-1 text-sm'>
             {
                 chats.filter((chat)=>chat.messages[0] ? chat.messages[0]?.content.toLowerCase().includes(search.toLowerCase()):
                 chat.name.toLowerCase().includes(search.toLowerCase())).map((chat)=>(
-                    <div onClick={()=>{navigate('/'); setSelectedChat(chat); setIsMenuOpen(false)}} key={chat._id} className='p-2 px-4 dark:bg-[#57317C]/10 border border-gray-300
-                    dark:border-[#80609F]/15 rounded-md cursor-pointer flex justify-between group'>
-                        <div>
-                            <p className='turncate w-full'>{chat.messages.length > 0 ? chat.messages[0].content.slice(0,32): chat.name}</p>
-                            <p className='text-xs text-gray-500 dark:text-[#B1A6C0]'>{moment(chat.updatedAt).fromNow()}</p>
+                    <div onClick={()=>{navigate('/'); setSelectedChat(chat); setIsMenuOpen(false)}} key={chat._id} className='group flex cursor-pointer justify-between gap-3 rounded-lg border border-transparent p-3 transition hover:border-zinc-200 hover:bg-[#faf8f1] dark:hover:border-white/10 dark:hover:bg-white/[0.05]'>
+                        <div className='min-w-0'>
+                            <p className='w-full truncate font-medium'>{chat.messages.length > 0 ? chat.messages[0].content.slice(0,48): chat.name}</p>
+                            <p className='mt-1 text-xs text-zinc-500 dark:text-zinc-400'>{moment(chat.updatedAt).fromNow()}</p>
                         </div>
-                        <img src={assets.bin_icon} alt="" className='hidden group-hover:block w-4 cursor-pointer
-                        not-dark:invert' onClick={e=> deleteChat(e, chat._id)}/>
+                        <button onClick={e=> deleteChat(e, chat._id)} className='grid h-8 w-8 shrink-0 place-items-center rounded-full opacity-0 transition group-hover:opacity-100 hover:bg-rose-100 dark:hover:bg-rose-400/10' aria-label='Delete chat'>
+                            <img src={assets.bin_icon} alt="" className='w-4 dark:invert'/>
+                        </button>
                     </div>
                 ))
             }
         </div>
         {/* Community images*/}
-        <div onClick={()=>{navigate('/community'); setIsMenuOpen(false)}} className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 
-        rounded-md cursor-pointer hover:scale-103 transition-all'>
-            <img src={assets.gallery_icon} alt="" className='w-4.5 not-dark:invert'/>
+        <div onClick={()=>{navigate('/community'); setIsMenuOpen(false)}} className='mt-4 flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-200 bg-white p-3 transition hover:-translate-y-0.5 hover:border-cyan-300 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/50'>
+            <img src={assets.gallery_icon} alt="" className='w-5 dark:invert'/>
             <div className='flex flex-col text-sm'>
-                <p>Community Images</p>
+                <p className='font-semibold'>Community Images</p>
+                <p className='text-xs text-zinc-500 dark:text-zinc-400'>Browse shared generations</p>
             </div>
         </div>
 
          {/* Credit Purchase*/}
-        <div onClick={()=>{navigate('/credits'); setIsMenuOpen(false)}} className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 
-        rounded-md cursor-pointer hover:scale-103 transition-all'>
-            <img src={assets.diamond_icon} alt="" className='w-4.5 dark:invert'/>
+        <div onClick={()=>{navigate('/credits'); setIsMenuOpen(false)}} className='mt-3 flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-200 bg-white p-3 transition hover:-translate-y-0.5 hover:border-lime-300 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-lime-400/50'>
+            <img src={assets.diamond_icon} alt="" className='w-5 dark:invert'/>
             <div className='flex flex-col text-sm'>
-                <p>Credits : {user?.credits}</p>
-                <p className='text.xs text-gray-400'>Purchase credits to use Finn</p>
+                <p className='font-semibold'>Credits: {user?.credits}</p>
+                <p className='text-xs text-zinc-500 dark:text-zinc-400'>Top up your workspace</p>
             </div>
         </div>
 
         {/*Dark Toggle */}
-        <div className='flex items-center justify-between gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 
-        rounded-md'>
+        <div className='mt-3 flex items-center justify-between gap-2 rounded-lg border border-zinc-200 bg-white p-3 dark:border-white/10 dark:bg-white/[0.04]'>
             <div className='flex items-center gap-2 text-sm'>
-                <img src={assets.theme_icon} alt="" className='w-4 not-dark:invert'/>
-                <p>Dark Mode</p>
+                <img src={assets.theme_icon} alt="" className='w-4 dark:invert'/>
+                <p className='font-medium'>Dark Mode</p>
             </div>
             <label className='relative inline-flex cursor-pointer'>
                 <input onChange={()=>setTheme(theme === 'dark' ? 'light' : 'dark')} type="checkbox"
                 className='sr-only peer' checked={theme === 'dark'}/>
-                <div className='w-9 h-5 bg-gray-400 rounded-full peer-checked:bg-purple-600
-                transition-all'>
+                <div className='h-6 w-11 rounded-full bg-zinc-300 transition-all peer-checked:bg-cyan-400'>
 
                 </div>
-                <span className='absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-transform
-                peer-checked:translate-x-4'>
+                <span className='absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5'>
 
                 </span>
             </label>
         </div>
 
         {/*user account */}
-        <div className='flex items-center gap-3 p-3 mt-4 border border-gray-300 dark:border-white/15 
-        rounded-md cursor-pointer group'>
-            <img src={assets.user_icon} alt="" className='w-7 rounded-full'/>
-            <p className='flex-1 text-sm dark:text-primary truncate'>{user ? user.name : 'Login to your account'}</p>
-            {user && <img onClick={logOut} src={assets.logout_icon} className='h-5 cursor-pointer hidden not-dark:invert
-            group-hover:block'/>}
+        <div className='group mt-3 flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-200 bg-[#faf8f1] p-3 dark:border-white/10 dark:bg-white/[0.04]'>
+            <img src={assets.user_icon} alt="" className='w-9 rounded-full bg-white p-1'/>
+            <div className='min-w-0 flex-1'>
+                <p className='truncate text-sm font-semibold'>{user ? user.name : 'Login to your account'}</p>
+                <p className='truncate text-xs text-zinc-500 dark:text-zinc-400'>{user?.email || 'Guest session'}</p>
+            </div>
+            {user && <button onClick={logOut} className='grid h-9 w-9 place-items-center rounded-full opacity-70 transition hover:bg-zinc-200 hover:opacity-100 dark:hover:bg-white/10' aria-label='Log out'>
+                <img src={assets.logout_icon} className='h-5 dark:invert' alt=''/>
+            </button>}
             
         </div>
 
-        <img onClick={()=>setIsMenuOpen(false)} src={assets.close_icon} alt="" className='absolute top-3 right-3 w-5 h-5 cursor-pointer
-        md:hidden not-dark:invert'/>
+        <button onClick={()=>setIsMenuOpen(false)} className='absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-zinc-200 bg-white md:hidden dark:border-white/10 dark:bg-zinc-900' aria-label='Close menu'>
+            <img src={assets.close_icon} alt="" className='h-4 w-4 dark:invert'/>
+        </button>
 
-    </div>
+    </aside>
   )
 }
 

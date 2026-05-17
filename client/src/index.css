@@ -8,15 +8,25 @@
 }
 
 @theme {
-  --color-primary: #E6CCFF
+  --color-primary: #d7f7ef
 }
 
 ::-webkit-scrollbar{
-  display: none;
+  width: 0;
+  height: 0;
 }
 
 .reset-tw :not(pre):not(code){
   all: revert;
+}
+
+.reset-tw pre {
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.reset-tw code {
+  border-radius: 6px;
 }
 
 .loader div:nth-child(2){

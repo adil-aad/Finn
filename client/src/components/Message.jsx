@@ -12,28 +12,26 @@ const Message = ({message}) => {
   return (
     <div>
         {message.role === 'user' ? (
-            <div className='flex items-start justify-end my-4 gap-2'>
-                <div className='flex flex-col gap-2 p-2 px-4 bg-slate-50 dark:bg-[#57317C]/30
-                border-[#8060F]/30 rounded-md max-w-2xl'>
-                    <p className='text-sm dark:text-primary'>{message.content}</p>
-                    <span className='text-xs text-gray-400 dark:text-[#B1A6C0]'>{moment(message.timestamp).fromNow()}</span>
+            <div className='my-5 flex items-start justify-end gap-3'>
+                <div className='flex max-w-2xl flex-col gap-2 rounded-lg bg-zinc-950 px-4 py-3 text-white shadow-lg shadow-zinc-200/70 dark:bg-white dark:text-zinc-950 dark:shadow-black/20'>
+                    <p className='text-sm leading-6'>{message.content}</p>
+                    <span className='text-xs text-white/55 dark:text-zinc-500'>{moment(message.timestamp).fromNow()}</span>
 
                 </div>
-                <img src={assets.user_icon} alt="" className='w-8 rounded-full'/>
+                <img src={assets.user_icon} alt="" className='w-9 rounded-full bg-white p-1 shadow-sm'/>
 
             </div>
         ): 
         (
-           <div className='inline-flex flex-col gap-2 p-2 px-4 max-w-2xl bg-primary/20 
-           dark:bg-#[57317C]/30 border border-[#806090F]/30 rounded-md my-4'>
+           <div className='my-5 inline-flex max-w-3xl flex-col gap-3 rounded-lg border border-zinc-200 bg-[#faf8f1] px-4 py-3 shadow-sm dark:border-white/10 dark:bg-white/[0.04]'>
                 {message.isImage ? (
-                    <img src={message.content} className='w-full max-w-md mt-2 rounded-md'/>
+                    <img src={message.content} className='mt-1 w-full max-w-xl rounded-lg border border-zinc-200 object-cover dark:border-white/10'/>
                 ) : 
                 (
-                    <div className='text-sm dark:text-primary reset-tw'>
+                    <div className='reset-tw text-sm leading-6 text-zinc-800 dark:text-zinc-100'>
                     <Markdown>{message.content}</Markdown></div>
                 )}
-                <span className='text-xs text-gray-400 dark:text-[#B1A6C0]'>{moment(message.timestamp).fromNow()}</span> 
+                <span className='text-xs text-zinc-500 dark:text-zinc-400'>{moment(message.timestamp).fromNow()}</span> 
            </div> 
         )
         }

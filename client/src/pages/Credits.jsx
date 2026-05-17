@@ -45,38 +45,37 @@ const Credits = () => {
 
   if(loading) return <Loading />
   return (
-    <div className='max-w-7xl h-screen overflow-y-scroll mx-auto px-4 sm:px-6
-    lg:px:8 py-12'>
-      <h2 className='text-3xl font-semibold text-center mb-10 xl:mt-30
-      text-gray-800 dark:text-white'>Credit Plans</h2>
+    <section className='relative z-10 h-full w-full overflow-y-auto px-4 pb-10 pt-16 md:px-8 md:pt-8 xl:px-14'>
+      <div className='mx-auto max-w-6xl'>
+      <div className='mb-8 text-center'>
+        <p className='text-xs font-bold uppercase tracking-[0.2em] text-lime-700 dark:text-lime-300'>Credits</p>
+        <h2 className='mt-2 text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white'>Choose Your Plan</h2>
+        <p className='mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-500 dark:text-zinc-400'>Add generation credits for text and image workflows.</p>
+      </div>
 
-      <div className='flex flex-wrap justify-center gap-8'>
+      <div className='grid gap-5 md:grid-cols-3'>
         {plans.map((plan)=>(
-          <div key={plan._id} className={`border border-gray-200 dark:border-purple-700 rounded-lg
-          shadow hover:shadow-lg transition-shadow p-6 min-w-[300px] flex flex-col
-          ${plan._id === 'pro' ? "bg-purple-50 dark:bg-purple-900" : "bg-white dark:bg-transparent"}`}>
+          <div key={plan._id} className={`relative flex min-h-[360px] flex-col rounded-lg border p-6 shadow-lg transition duration-300 hover:-translate-y-1 ${plan._id === 'pro' ? "border-zinc-950 bg-zinc-950 text-white shadow-zinc-300/80 dark:border-cyan-300 dark:bg-cyan-300 dark:text-zinc-950 dark:shadow-black/20" : "border-zinc-200 bg-white text-zinc-950 shadow-zinc-200/60 dark:border-white/10 dark:bg-zinc-950/70 dark:text-white dark:shadow-black/20"}`}>
+            {plan._id === 'pro' && <span className='absolute right-4 top-4 rounded-full bg-rose-100 px-3 py-1 text-xs font-bold text-rose-700 dark:bg-zinc-950 dark:text-cyan-200'>Popular</span>}
 
             <div className='flex-1'>
-              <h3 className='text-xl font-semibold text-gray-900 dark:text-white mb-2'>{plan.name}</h3>
-              <p className='text-2xl font-bold text-purple-600 dark:text-purple-300 mb-4'>${plan.price}
-                <span className='text-base font-normal text-gray-600
-                dark:text-purple-200'>{' '}/ {plan.credits} credits</span>
+              <h3 className='mb-2 text-xl font-semibold'>{plan.name}</h3>
+              <p className={`mb-5 text-4xl font-bold ${plan._id === 'pro' ? '' : 'text-zinc-950 dark:text-white'}`}>${plan.price}
+                <span className={`text-base font-normal ${plan._id === 'pro' ? 'text-white/70 dark:text-zinc-700' : 'text-zinc-500 dark:text-zinc-400'}`}>{' '}/ {plan.credits} credits</span>
               </p>
-              <ul className='list-disc list-inside text-sm text-gray-700
-              dark:text-purple-200 space-y-1'>
+              <ul className='space-y-3 text-sm'>
                 {plan.features.map((feature, index)=>(
-                  <li key={index}>{feature}</li>
+                  <li key={index} className='flex gap-2'><span className='mt-1 h-2 w-2 shrink-0 rounded-full bg-lime-400'></span><span>{feature}</span></li>
                 ))}
               </ul>
             </div>
-            <button onClick={()=> toast.promise(purchasePlan(plan._id), {loading: 'Processing'})} className='mt-6 bg-purple-600 hover:bg-purple-700 active:bg-purple-800
-            text-white font-medium py-2 rounded transiton-colors cursor-pointer'>Buy Now</button>
+            <button onClick={()=> toast.promise(purchasePlan(plan._id), {loading: 'Processing'})} className={`mt-6 h-11 cursor-pointer rounded-md font-semibold transition ${plan._id === 'pro' ? 'bg-white text-zinc-950 hover:bg-zinc-100 dark:bg-zinc-950 dark:text-white dark:hover:bg-zinc-800' : 'bg-zinc-950 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200'}`}>Buy Now</button>
 
           </div>
         ))}
       </div>
-      
-    </div>
+      </div>
+    </section>
   )
 }
 
