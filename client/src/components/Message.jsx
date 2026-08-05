@@ -12,27 +12,27 @@ const Message = ({message}) => {
   return (
     <div>
         {message.role === 'user' ? (
-            <div className='my-5 flex items-start justify-end gap-3'>
-                <div className='flex max-w-2xl flex-col gap-2 rounded-lg bg-zinc-950 px-4 py-3 text-white shadow-lg shadow-zinc-200/70 dark:bg-white dark:text-zinc-950 dark:shadow-black/20'>
+            <div className='my-4 flex items-start justify-end gap-3'>
+                <div className='flex max-w-2xl flex-col gap-1.5 rounded-lg bg-accent px-4 py-3 text-accent-ink'>
                     <p className='text-sm leading-6'>{message.content}</p>
-                    <span className='text-xs text-white/55 dark:text-zinc-500'>{moment(message.timestamp).fromNow()}</span>
+                    <span className='text-xs text-accent-ink/60'>{moment(message.timestamp).fromNow()}</span>
 
                 </div>
-                <img src={assets.user_icon} alt="" className='w-9 rounded-full bg-white p-1 shadow-sm'/>
+                <img src={assets.user_icon} alt="" className='w-8 rounded-full bg-surface p-1'/>
 
             </div>
-        ): 
+        ):
         (
-           <div className='my-5 inline-flex max-w-3xl flex-col gap-3 rounded-lg border border-zinc-200 bg-[#faf8f1] px-4 py-3 shadow-sm dark:border-white/10 dark:bg-white/[0.04]'>
+           <div className='my-4 inline-flex max-w-3xl flex-col gap-2 rounded-lg border border-line bg-surface-muted px-4 py-3'>
                 {message.isImage ? (
-                    <img src={message.content} className='mt-1 w-full max-w-xl rounded-lg border border-zinc-200 object-cover dark:border-white/10'/>
-                ) : 
+                    <img src={message.content} className='mt-1 w-full max-w-xl rounded-md border border-line object-cover'/>
+                ) :
                 (
-                    <div className='reset-tw text-sm leading-6 text-zinc-800 dark:text-zinc-100'>
+                    <div className='reset-tw text-sm leading-6 text-ink'>
                     <Markdown>{message.content}</Markdown></div>
                 )}
-                <span className='text-xs text-zinc-500 dark:text-zinc-400'>{moment(message.timestamp).fromNow()}</span> 
-           </div> 
+                <span className='text-xs text-ink-muted'>{moment(message.timestamp).fromNow()}</span>
+           </div>
         )
         }
     </div>
