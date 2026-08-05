@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useAppContext } from '../context/AppContext'
 import { assets } from '../assets/assets'
+import Logo from './Logo'
 import Message from './Message'
 import toast from 'react-hot-toast'
 
@@ -8,7 +9,7 @@ const ChatBox = () => {
 
     const containerRef = useRef(null)
 
-    const {selectedChat, theme, user, axios, token, setUser} = useAppContext()
+    const {selectedChat, user, axios, token, setUser} = useAppContext()
 
     const [messages, setMessages] = useState([])
     const [loading, setLoading] = useState(false)
@@ -75,8 +76,7 @@ const ChatBox = () => {
         <div ref={containerRef} className='mx-auto mb-4 w-full max-w-4xl flex-1 overflow-y-auto rounded-lg border border-line bg-surface p-4 md:p-6'>
             {messages.length === 0 && (
                 <div className='flex h-full min-h-[420px] flex-col items-center justify-center gap-4 text-center'>
-                    <img src={theme === 'dark' ? assets.logo_full: assets.logo_full_dark} alt=""
-                    className='w-full max-w-40'/>
+                    <Logo className='text-ink' markClass='h-8 w-8' textClass='text-xl'/>
                     <div>
                         <p className='text-2xl font-semibold text-ink'>Ask away</p>
                         <p className='mx-auto mt-2 max-w-md text-sm leading-6 text-ink-muted'>Draft, explore, code, or generate images from a single workspace.</p>

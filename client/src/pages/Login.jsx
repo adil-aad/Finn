@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useAppContext } from '../context/AppContext'
+import Logo from '../components/Logo'
 import toast from 'react-hot-toast'
 
 const Login = () => {
@@ -41,8 +42,8 @@ const Login = () => {
     <main className='grid min-h-screen place-items-center px-4 py-10'>
       <div className='w-full max-w-sm'>
         <form onSubmit={handleSubmit} className='rounded-lg border border-line bg-surface p-6 sm:p-8'>
-          <h1 className='text-lg font-semibold text-ink'>Finn</h1>
-          <p className='mt-1 text-sm text-ink-muted'>
+          <Logo className='text-ink' markClass='h-8 w-8' textClass='text-lg'/>
+          <p className='mt-3 text-sm text-ink-muted'>
             {isRegister ? 'Create an account to get started.' : 'Log in to your account.'}
           </p>
 

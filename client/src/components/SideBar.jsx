@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useAppContext } from '../context/AppContext'
 import { assets } from '../assets/assets'
+import Logo from './Logo'
 import moment from 'moment'
 import toast from 'react-hot-toast'
 
@@ -44,8 +45,7 @@ const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
     <aside className={`relative z-40 flex h-screen w-72 shrink-0 flex-col border-r border-line bg-surface p-4 transition-transform duration-200 max-md:fixed max-md:left-0 max-md:top-0 ${!isMenuOpen && 'max-md:-translate-x-full'}`}>
         {/* logo */}
         <div className='px-1 py-2'>
-            <img src={theme === 'dark' ? assets.logo_full: assets.logo_full_dark} alt="Finn"
-            className='w-full max-w-32'/>
+            <Logo className='text-ink'/>
         </div>
         {/* New chat button*/}
         <button onClick={createNewChat} className='mt-4 flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-accent text-sm font-medium text-accent-ink transition hover:opacity-90'>
