@@ -23,19 +23,17 @@ const App = () => {
   return (
     <>
     <Toaster toastOptions={{
-      className: 'dark:!bg-zinc-900 dark:!text-white',
-      style: { borderRadius: '14px' }
+      className: '!rounded-md !border !border-line !bg-surface !text-ink !text-sm !shadow-none'
     }} />
-    {!isMenuOpen && <button className='fixed top-4 left-4 z-30 grid h-11 w-11 place-items-center rounded-full border border-zinc-200 bg-white/90 shadow-lg shadow-zinc-200/60 backdrop-blur md:hidden dark:border-white/10 dark:bg-zinc-950/80 dark:shadow-black/30' onClick={()=>setIsMenuOpen(true)} aria-label='Open menu'>
+    {!isMenuOpen && <button className='fixed top-4 left-4 z-30 grid h-10 w-10 place-items-center rounded-md border border-line bg-surface md:hidden' onClick={()=>setIsMenuOpen(true)} aria-label='Open menu'>
       <img src={assets.menu_icon} className='h-5 w-5 dark:invert' alt=''/>
     </button>}
 
       {user ? (
-        <div className='min-h-screen bg-[#f6f4ef] text-zinc-950 dark:bg-[#101113] dark:text-zinc-50'>
+        <div className='min-h-screen bg-canvas text-ink'>
         <div className='flex h-screen w-screen overflow-hidden'>
           <SideBar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>
           <main className='relative flex min-w-0 flex-1 overflow-hidden'>
-            <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.14),transparent_34%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.10),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(248,113,113,0.08),transparent_34%)]' />
             <Routes>
               <Route path='/' element={<ChatBox/>}/>
               <Route path='/credits' element={<Credits/>}/>
@@ -45,7 +43,7 @@ const App = () => {
         </div>
       </div>
       ): (
-        <div className='min-h-screen w-screen bg-[#f6f4ef] text-zinc-950 dark:bg-[#101113] dark:text-zinc-50'>
+        <div className='min-h-screen w-screen bg-canvas text-ink'>
           <Login />
         </div>
       )}
