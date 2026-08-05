@@ -7,13 +7,64 @@
   font-family: "Outfit", sans-serif;
 }
 
-@theme {
-  --color-primary: #d7f7ef
+/* Single source of truth for the palette. Light values live on :root, dark
+   overrides on .dark, so `bg-surface` and friends flip automatically and
+   components don't need a dark: variant for every colour. */
+:root {
+  --app-canvas: #f6f4ef;
+  --app-surface: #ffffff;
+  --app-surface-muted: #faf8f1;
+  --app-border: #e5e2da;
+  --app-border-strong: #d6d2c6;
+  --app-text: #171717;
+  --app-text-muted: #6f6a60;
+  --app-accent: #171717;
+  --app-accent-text: #ffffff;
 }
 
+.dark {
+  --app-canvas: #101113;
+  --app-surface: #171819;
+  --app-surface-muted: #1c1d1f;
+  --app-border: #2a2b2e;
+  --app-border-strong: #3a3b3f;
+  --app-text: #f2f2f0;
+  --app-text-muted: #9b968c;
+  --app-accent: #f2f2f0;
+  --app-accent-text: #101113;
+}
+
+@theme inline {
+  --color-canvas: var(--app-canvas);
+  --color-surface: var(--app-surface);
+  --color-surface-muted: var(--app-surface-muted);
+  --color-line: var(--app-border);
+  --color-line-strong: var(--app-border-strong);
+  --color-ink: var(--app-text);
+  --color-ink-muted: var(--app-text-muted);
+  --color-accent: var(--app-accent);
+  --color-accent-ink: var(--app-accent-text);
+}
+
+/* A thin, neutral scrollbar. The previous rule set width/height to 0, which
+   hid the scroll position entirely in the chat and sidebar lists. */
 ::-webkit-scrollbar{
-  width: 0;
-  height: 0;
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb{
+  background: var(--app-border-strong);
+  border-radius: 4px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--app-border-strong) transparent;
 }
 
 .reset-tw :not(pre):not(code){
