@@ -1,3 +1,5 @@
+# Finn
+
 An AI chat app with usage metering. Text replies are free-form; image requests
 are generated and metered against a credit balance the user funds through
 Stripe. Every message costs the operator money, so the credit system is not a
